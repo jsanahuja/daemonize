@@ -1,0 +1,32 @@
+{
+    "name": "sowe/daemon",
+    "description": "PHP as a Daemon",
+    "version": "0.0.1",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "daemon",
+        "service",
+        "background",
+        "server"
+    ],
+    "authors": [
+        {
+            "name": "Javier Sanahuja",
+            "email": "bannss1@gmail.com"
+        }
+    ],
+    "homepage": "https://github.com/jsanahuja/daemon",
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^7.2",
+        "ext-pcntl": "^7.2",
+        "ext-posix": "^7.2",
+        "monolog/monolog": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sowe\\Daemon\\": "src/"
+        }
+    }
+}
