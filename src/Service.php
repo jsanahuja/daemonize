@@ -85,6 +85,7 @@ class Service
         }
         $this->pid = getmypid();
         file_put_contents($this->pidFile, $this->pid);
+        echo "Success: Successfully started (pid: " . $this->pid . ")" . PHP_EOL;
         
         declare(ticks = 1);
         set_time_limit(0);
@@ -136,8 +137,32 @@ class Service
     
     protected function status()
     {
-
+        if (is_null($this->pid)) {
+            $msg = "\033[31m●\033[0m " . basename($_SERVER['PHP_SELF']) . PHP_EOL;
+            $msg .= "  Active: \033[31minactive (dead)\033[0m" . PHP_EOL;
+        } else {
+            $data = explode(' ', file_get_contents('/proc/' . $this->pid . '/stat'));
+            $status = [
+                'R' => 'Running',
+                'S' => 'Sleeping',
+                'D' => 'Waiting',
+                'Z' => 'Zombie',
+                'T' => 'Stopped',
+                't' => 'Tracing stop',
+                'W' => 'Paging',
+                'X' => 'Dead',
+                'x' => 'Dead',
+                'K' => 'Wakekill',
+                'W' => 'Waking',
+                'P' => 'Parked'
+            ][$data[2]];
+            $msg = "\033[32m●\033[0m " . basename($_SERVER['PHP_SELF']) . PHP_EOL;
+            $msg .= "  Active: \033[32mactive (" . strtolower($status) . ")\033[0m" . PHP_EOL;
+            $msg .= "     PID: " . $this->pid . PHP_EOL;
+        }
+        echo $msg;
     }
+
     protected function restart()
     {
         $this->stop();
@@ -147,7 +172,7 @@ class Service
     protected function stop()
     {
         if (!is_null($this->pid)) {
-            echo "Stopping " . $this->pid . "..." . PHP_EOL; 
+            echo "Success: Successfully stopped (pid: " . $this->pid . ")" . PHP_EOL;
             posix_kill($this->pid, SIGTERM);
         } else {
             echo "Error: Daemon is not running" . PHP_EOL;
