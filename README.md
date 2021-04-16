@@ -1,5 +1,5 @@
-# daemon
-PHP Daemon wrapper
+# Daemonize
+PHP Daemonization utility
 
 ## Requirements
 - PHP ^7.2
