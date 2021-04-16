@@ -1,7 +1,7 @@
 {
-    "name": "sowe/daemon",
+    "name": "sowe/daemonize",
     "description": "PHP as a Daemon",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "type": "library",
     "license": "MIT",
     "keywords": [
